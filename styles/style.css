@@ -1,0 +1,18 @@
+/* body {
+    background-image: url("../img/bg.jpg");
+    background-size: cover;
+} */
+
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+.Navbarbg{
+    background-color: #9CF6F6;
+}
+
+.Backgroundfooter{
+    background-color: #9CF6F6;
+}
