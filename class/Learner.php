@@ -44,11 +44,21 @@ class Learner{
 
     //Hydrate
     public function hydrate(array $tab){
-        $this->setId($tab['id']);
-        $this->setName($tab['name']);
-        $this->setDescription($tab['description']);
-        $this->setAge($tab['age']);
-        $this->setSize($tab['size']);
+        if((isset($tab['id'])) && !empty($tab['id'])){
+            $this->setId($tab['id']);
+        }
+        if((isset($tab['id'])) && !empty($tab['name'])){
+            $this->setName($tab['name']);
+        }
+        if((isset($tab['id'])) && !empty($tab['description'])){
+            $this->setDescription($tab['description']);
+        }
+        if((isset($tab['id'])) && !empty($tab['age'])){
+            $this->setAge($tab['age']);
+        }
+        if((isset($tab['id'])) && !empty($tab['size'])){
+            $this->setSize($tab['size']);
+        }
     }
     
 }

@@ -19,57 +19,101 @@
     require_once 'class/Learner.php';
     require_once 'class/Manager.php';
 
+    $manager = new Manager;
+    $learner = new Learner;
+
     ?>
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg Navbarbg">
-        <a class="navbar-brand" href="https://www.reddit.com/r/wallstreetbets/" target="blank"><img src="img/Stonks.jpg" alt="" height="90px" width="90px"></a>
-        <a class="navbar-brand" href="https://deltarune.com/" target="blank"><img src="img/Ralsei.png" alt="" height="90px" width="90px"></a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="container-fluid">
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <div class="flex-row justify-content-start">
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item active ">
-                            <a class="nav-link" href="#"><button type="button" class="btn-inline-white btn-secondary">Creer une Table</button></a>
-                        </li>
-                        <li class="nav-item active">
-                            <a class="nav-link" href="#"><button type="button" class="btn-inline-white btn-secondary">Lire la Table</button></a>
-                        </li>
-                        <li class="nav-item active">
-                            <a class="nav-link" href="#"><button type="button" class="btn-inline-white btn-secondary">Vider la Table</button></a>
-                        </li>
-                        <li class="nav-item active">
-                            <a class="nav-link" href="#"><button type="button" class="btn-inline-white btn-secondary">Supprimer la Base de données</button></a>
-                        </li>
-                        <li class="nav-item active">
-                            <a class="navbar-brand" href=""><img src="img/personne.png" alt="" height="90px" width="90px"></a>
-                        </li>
-                    </ul>
-                </div>
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <a class="navbar-brand" href=""><img src="img/epee.png" alt="" height="90px" width="90px"></a>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" href="#"><button type="button" class="btn-inline-white btn-secondary">Lire un Champion Random</button></a>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" href="#"><button type="button" class="btn-inline-white btn-secondary">Transformation d'une personne en Hulk</button></a>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" href="index.php"><button type="button" class="btn-inline-white btn-secondary">Supprimer un Champion Random </button></a>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" href="index.php"><button type="button" class="btn-inline-white btn-secondary">Lire la Table dans l'ordre d'âges Décroissant </button></a>
-                    </li>
-                </ul>
-            </div>
+    <div class="container-fluid">
+        <nav class="row justify-content-center navbar navbar-expand-lg Navbarbg">
+            <a class="navbar-brand" href="https://www.reddit.com/r/wallstreetbets/" target="blank"><img src="img/Stonks.jpg" alt="" height="90px" width="90px"></a>
+            <a class="navbar-brand" href="https://deltarune.com/" target="blank"><img src="img/Ralsei.png" alt="" height="90px" width="90px"></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <form action="index.php" method="POST">
+                <input type="submit" class="btn-inline-white btn-secondary" name="createtable" value="Creer une Table">
+                <input type="submit" class="btn-inline-white btn-secondary" name="lirelatable" value="Lire la Table">
+                <input type="submit" class="btn-inline-white btn-secondary" name="viderlatable" value="Vider la Table">
+                <input type="submit" class="btn-inline-white btn-secondary" name="deletetable" value="Supprimer la Table">
+                <a class="navbar-brand" href=""><img src="img/personne.png" alt="" height="90px" width="90px"></a>
+                <a class="navbar-brand" href="#"><img src="img/epee.png" alt="" height="90px" width="90px"></a>
+                <input type="submit" class="btn-inline-white btn-secondary" name="creerdonnees" value="Creer les champions">
+                <input type="submit" class="btn-inline-white btn-secondary" name="" value="Random">
+                <input type="submit" class="btn-inline-white btn-secondary" name="hulk" value="Hulk">
+                <input type="submit" class="btn-inline-white btn-secondary" name="" value="Random delete">
+                <input type="submit" class="btn-inline-white btn-secondary" name="orderbydesc" value="Order by Desc">
+            </form>
+        </nav>
+    </div>
+    <div class="container mx-auto mt-4">
+        <div class="row justify-content-center">
+
+
+            <?php
+            // Function
+            if (isset($_POST['createtable'])) {
+                $manager->createTable();
+            }
+
+            if (isset($_POST['deletetable'])) {
+                $manager->deleteTable();
+            }
+
+            if (isset($_POST['creerdonnees'])) {
+                $manager->creerlesDonnees();
+            }
+
+            if (isset($_POST['viderlatable'])) {
+                $manager->ctrlaltSupp();
+            }
+
+            if (isset($_POST['lirelatable'])) { ?>
+                <?php
+                $championread = $manager->lirelaTable();
+                foreach ($championread as $valeur) { ?>
+                    <div class="col-md-4">
+                        <div class="card" style="width: 18rem;">
+                            <img src="https://images.pexels.com/photos/268351/pexels-photo-268351.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">Nom : <?php echo $valeur['champion'] ?></h5>
+                                <h6 class="card-text">Age : <?php echo $valeur['age'] ?> ans</h6>
+                                <h6 class="card-text">Taille : <?php echo $valeur['size'] ?>m</h6>
+                                <p class="card-text">Description : <?php echo $valeur['description'] ?></p>
+                            </div>
+                        </div>
+                    </div>
+            <?php }
+            } ?>
+
+            <?php
+            if (isset($_POST['orderbydesc'])) { ?>
+                <?php $orderby = $manager->orderbyDesc();
+                foreach ($orderby as $valeur) { ?>
+                    <div class="col-md-4">
+                        <div class="card" style="width: 18rem;">
+                            <img src="https://images.pexels.com/photos/268351/pexels-photo-268351.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">Nom : <?php echo $valeur['champion'] ?></h5>
+                                <h6 class="card-text">Age : <?php echo $valeur['age'] ?> ans</h6>
+                                <h6 class="card-text">Taille : <?php echo $valeur['size'] ?>m</h6>
+                                <p class="card-text">Description : <?php echo $valeur['description'] ?></p>
+                            </div>
+                        </div>
+                    </div>
+            <?php }
+            } ?>
+
+            <?php 
+            if(isset($_POST['hulk'])){
+                $hulk = $manager->updateHulk();
+                var_dump($hulk);
+            }
+            ?>
+
         </div>
-        </div>
-    </nav>
-    <footer>
+    </div>
+    <footer class="bottom">
         <div class="container-fluid">
             <div class="row justify-content-around align-items-center Backgroundfooter">
                 <a href="https://github.com/VersluysTheo" target="blank"><img src="img/github.png" alt="" height="90px" width="90px"></a>

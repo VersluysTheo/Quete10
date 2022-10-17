@@ -1,18 +1,23 @@
-/* body {
-    background-image: url("../img/bg.jpg");
+body {
+    background-image: url(https://images.pexels.com/photos/33545/sunrise-phu-quoc-island-ocean.jpg);
     background-size: cover;
-} */
+    background-attachment: fixed;
+}
 
 footer {
-    position: absolute;
     bottom: 0;
     width: 100%;
+    color: white;
 }
 
-.Navbarbg{
-    background-color: #9CF6F6;
-}
-
-.Backgroundfooter{
-    background-color: #9CF6F6;
-}
+:root {
+    --gradient: linear-gradient(to left top, #DD2476 10%, #FF512F 90%) !important;
+  }
+  
+  .card {
+    background: #222;
+    border: 1px solid #dd2476;
+    color: rgba(250, 250, 250, 0.8);
+    margin-bottom: 2rem;
+  }
+  
