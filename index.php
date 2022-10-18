@@ -37,11 +37,10 @@
                 <input type="submit" class="btn-inline-white btn-secondary" name="viderlatable" value="Vider la Table">
                 <input type="submit" class="btn-inline-white btn-secondary" name="deletetable" value="Supprimer la Table">
                 <a class="navbar-brand" href=""><img src="img/personne.png" alt="" height="90px" width="90px"></a>
-                <a class="navbar-brand" href="#"><img src="img/epee.png" alt="" height="90px" width="90px"></a>
                 <input type="submit" class="btn-inline-white btn-secondary" name="creerdonnees" value="Creer les champions">
-                <input type="submit" class="btn-inline-white btn-secondary" name="" value="Random">
+                <input type="submit" class="btn-inline-white btn-secondary" name="randomread" value="Random">
                 <input type="submit" class="btn-inline-white btn-secondary" name="hulk" value="Hulk">
-                <input type="submit" class="btn-inline-white btn-secondary" name="" value="Random delete">
+                <input type="submit" class="btn-inline-white btn-secondary" name="randomsupp" value="Random delete">
                 <input type="submit" class="btn-inline-white btn-secondary" name="orderbydesc" value="Order by Desc">
             </form>
         </nav>
@@ -51,22 +50,34 @@
 
 
             <?php
-            // Function
+            // Function en Rapport avec la Table 
             if (isset($_POST['createtable'])) {
-                $manager->createTable();
-            }
+                $manager->createTable(); ?>
+                <div class="alert alert-success text-center" role="alert">
+                    Votre Table a bien été Crée.
+                </div>
+            <?php }
 
             if (isset($_POST['deletetable'])) {
-                $manager->deleteTable();
-            }
+                $manager->deleteTable(); ?>
+                <div class="alert alert-danger text-center" role="alert">
+                    Votre Table a bien été Supprimé.
+                </div>
+            <?php }
 
             if (isset($_POST['creerdonnees'])) {
-                $manager->creerlesDonnees();
-            }
+                $manager->creerlesDonnees(); ?>
+                <div class="alert alert-success text-center" role="alert">
+                    Vos champions on été crées.
+                </div>
+            <?php }
 
             if (isset($_POST['viderlatable'])) {
-                $manager->ctrlaltSupp();
-            }
+                $manager->ctrlaltSupp(); ?>
+                <div class="alert alert-danger text-center" role="alert">
+                    Votre Table a été vidée.
+                </div>
+            <?php }
 
             if (isset($_POST['lirelatable'])) { ?>
                 <?php
@@ -87,6 +98,7 @@
             } ?>
 
             <?php
+            // ORDER BY DESC
             if (isset($_POST['orderbydesc'])) { ?>
                 <?php $orderby = $manager->orderbyDesc();
                 foreach ($orderby as $valeur) { ?>
@@ -104,11 +116,43 @@
             <?php }
             } ?>
 
-            <?php 
-            if(isset($_POST['hulk'])){
+            <?php
+            // HULK
+            if (isset($_POST['hulk'])) {
                 $hulk = $manager->updateHulk();
-                var_dump($hulk);
+                $manager->hulkChanger($hulk['id']); ?>
+                <div class="alert alert-success text-center" role="alert">
+                    BUUUUUUUUUUULIIIIIIIIIIIAAAAAAAAAAAAAAAA !!!
+                </div>
+                <?php // echo $hulk['id'];
             }
+            // Random Delete
+            if (isset($_POST['randomsupp'])) {
+                $list = $manager->lirelaTable();
+                $manager->ctrlaltSupprand($list); ?>
+                <div class="alert alert-primary text-center" role="alert">
+                    Un Champion aléatoire a été Supprimé.
+                </div>
+            <?php }
+
+            // Random Read
+            if (isset($_POST['randomread'])) {
+                $list = $manager->lirelaTable();
+                $lirerandom = $manager->lireRandom($list);
+                // echo $lirerandom[0]['champion']; 
+            ?>
+                <div class="col-md-4">
+                    <div class="card" style="width: 18rem;">
+                        <img src="https://images.pexels.com/photos/268351/pexels-photo-268351.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">Nom : <?php echo $lirerandom[0]['champion'] ?></h5>
+                            <h6 class="card-text">Age : <?php echo $lirerandom[0]['age'] ?> ans</h6>
+                            <h6 class="card-text">Taille : <?php echo $lirerandom[0]['size'] ?>m</h6>
+                            <p class="card-text">Description : <?php echo $lirerandom[0]['description'] ?></p>
+                        </div>
+                    </div>
+                </div>
+            <?php }
             ?>
 
         </div>

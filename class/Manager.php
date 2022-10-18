@@ -1,35 +1,39 @@
 <?php
-class Manager{
+class Manager
+{
 
     private $_db;
-    protected $table ='champion';
+    protected $table = 'champion';
 
     public function __construct()
     {
         $this->_db = Database::db();
     }
 
-    public function findAll(){
-        $sql= "SELECT * FROM $this->table";
+    public function findAll()
+    {
+        $sql = "SELECT * FROM $this->table";
         $query = $this->_db->prepare($sql);
         $query->execute();
         return $query->fetchAll();
     }
 
-    public function findOne(string $name){
-    $sql= "SELECT * FROM champion WHERE $this->table = :param1";
-    $query = $this->_db->prepare($sql);
-    $query->bindParam(':param1',$id,PDO::PARAM_INT);
-    $query->bindParam(':param2',$name,PDO::PARAM_STR);
-    $query->bindParam(':param3',$description,PDO::PARAM_STR);
-    $query->bindParam(':param4',$age,PDO::PARAM_INT);
-    $query->bindParam(':param5',$size,PDO::PARAM_INT);
-    $query->execute();
-    return $query->fetch();
+    public function findOne(string $name)
+    {
+        $sql = "SELECT * FROM champion WHERE $this->table = :param1";
+        $query = $this->_db->prepare($sql);
+        $query->bindParam(':param1', $id, PDO::PARAM_INT);
+        $query->bindParam(':param2', $name, PDO::PARAM_STR);
+        $query->bindParam(':param3', $description, PDO::PARAM_STR);
+        $query->bindParam(':param4', $age, PDO::PARAM_INT);
+        $query->bindParam(':param5', $size, PDO::PARAM_INT);
+        $query->execute();
+        return $query->fetch();
     }
 
 
-    public function createTable(){
+    public function createTable()
+    {
         $sql = "CREATE TABLE champion( 
             id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
             champion VARCHAR(64) NOT NULL, 
@@ -38,17 +42,19 @@ class Manager{
             size FLOAT
             ) 
             ENGINE=InnoDB;";
-            $query = $this->_db->prepare($sql);
-            $query->execute();
+        $query = $this->_db->prepare($sql);
+        $query->execute();
     }
 
-    public function deleteTable(){
+    public function deleteTable()
+    {
         $sql = "DROP TABLE champion";
         $query = $this->_db->prepare($sql);
         $query->execute();
     }
 
-    public function creerlesDonnees(){
+    public function creerlesDonnees()
+    {
         $sql = "INSERT INTO `champion` (`id`, `champion`, `description`, `age`, `size`) VALUES
         (1, 'Dylan', 'Dylan 25 ans Boulanger mais allergique à la farine ( ahah la merde ).\r\nIl est BFF avec la calvitie depuis sa naissance.\r\nIl est Batman entre minuit et minuit 1\r\nIl ne pense pas que l\'alcool soit de l\'eau mais la Monster si.\r\nIl a toujours rêver de participer a une bataille médiévale car il adore la période du 12ème siècle et qu\'il est sadomasochiste.\r\n', 25, 1.85),
         (2, 'Miana', 'Miana 22 ans, pense que le second degré est un fruit comestibles des îles.\r\nElle a toujours rêver d\'avoir des amis même si il est insupportable 24h/24.\r\nElle est capable de te parler de sa vie sentimentale de son enfance alors que tu lui a juste dit bonjour.\r\nElle est accro à la cocaïne et à la téléréalité ( d\'où le pète au casque ).\r\nElle a déja fraudé Pole Emploi.', 22, 1.12),
@@ -74,21 +80,23 @@ class Manager{
         $query->execute();
     }
 
-    public function lirelaTable(){
+    public function lirelaTable()
+    {
         $sql = "SELECT * FROM `champion`";
         $query = $this->_db->prepare($sql);
         $query->execute();
-        $championread = $query->fetchAll();
-        return $championread;
+        return $query->fetchAll();
     }
 
-    public function ctrlaltSupp(){
+    public function ctrlaltSupp()
+    {
         $sql = "DELETE FROM `champion`";
         $query = $this->_db->prepare($sql);
         $query->execute();
     }
 
-    public function orderbyDesc(){
+    public function orderbyDesc()
+    {
         $sql = "SELECT * FROM `champion` ORDER BY `age` DESC";
         $query = $this->_db->prepare($sql);
         $query->execute();
@@ -96,23 +104,51 @@ class Manager{
         return $orderby;
     }
 
-        public function deleteRandom(){
-        $sql ='DELETE FROM champion WHERE `id` = :param1';
+    public function deleteRandom()
+    {
+        $sql = 'DELETE FROM champion WHERE `id` = :param1';
         $query = $this->_db->prepare($sql);
-        $query->bindParam(':param1',$id,PDO::PARAM_INT,);
+        $query->bindParam(':param1', $id, PDO::PARAM_INT);
         $query->execute();
     }
 
-    public function updateHulk(){
-    $sql = "SELECT * FROM `champion` Limit 1 OFFSET 4";
-    $query = $this->_db->prepare($sql);
-    $query->execute();
-    $hulk = $query->fetch();
-    return $hulk;
+    public function updateHulk()
+    {
+        $sql = "SELECT * FROM `champion` Limit 1 OFFSET 4";
+        $query = $this->_db->prepare($sql);
+        $query->execute();
+        $hulk = $query->fetch();
+        return $hulk;
     }
 
-    // public function hulkChanger(){
-    //     $sql "UPDATE `champion` SET `id` = $hulk['id'] WHERE id = :param1";
-    // }
+    public function hulkChanger($hulk)
+    {
+        $sql = "UPDATE `champion` SET `champion` = 'Hulk', `description` = 'Il ne faut pas le provoquer en 1vs1 sous risque de mort certaine.Il a refusé de faire de la publicité pour Géant Vert.Il aime les balades en fôret.', `age` = 50, `size` = '2.4' WHERE id = :param1";
+        $query = $this->_db->prepare($sql);
+        $query->bindParam(':param1', $hulk, PDO::PARAM_INT);
+        $query->execute();
+    }
+
+    public function ctrlaltSupprand($list)
+    {
+        $prep = count($list);
+        // var_dump($prep);
+        $random = rand(0, $prep - 1);
+        // var_dump($random);
+        $sql = "DELETE FROM `champion` WHERE `id` = :param1";
+        $query = $this->_db->prepare($sql);
+        $query->bindParam(':param1', $random, PDO::PARAM_INT);
+        $query->execute();
+    }
+
+    public function lireRandom($list)
+    {
+        $prep = count($list);
+        $random = rand(0, $prep - 1);
+        $sql = "SELECT * FROM `champion` WHERE `id` = :param1";
+        $query = $this->_db->prepare($sql);
+        $query->bindParam(':param1', $random, PDO::PARAM_INT);
+        $query->execute();
+        return $query->fetchAll();
+    }
 }
-?>

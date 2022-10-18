@@ -168,3 +168,12 @@ Tanea: 38ans, 1m81	(20)(v)
 - Pense que Bruno Mars devrait se renommer Brunovembre le mois Prochain 
 - est capable de faire le poirier sur un élastique au bord d'un canyon ou il pourrait chuter a tout moment 
 - est mythomane de nature
+
+
+
+
+HULK : 50 ans; 2m40 (transform)
+Il ne faut pas le provoquer en 1vs1 sous risque de mort certaine.Il a refusé de faire de la publicité pour Géant Vert.Il aime les balades en fôret.
+
+
+, `description` = 'Il ne faut pas le provoquer en 1vs1 sous risque de mort certaine.Il a refusé de faire de la publicité pour Géant Vert.Il aime les balades en fôret.', `age` = 50, `size` = '2.4'
