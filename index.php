@@ -82,6 +82,7 @@
             if (isset($_POST['lirelatable'])) { ?>
                 <?php
                 $championread = $manager->lirelaTable();
+                if (!empty($championread)){
                 foreach ($championread as $valeur) { ?>
                     <div class="col-md-4">
                         <div class="card" style="width: 18rem;">
@@ -94,8 +95,11 @@
                             </div>
                         </div>
                     </div>
-            <?php }
-            } ?>
+            <?php } } else { ?>
+                <div class="alert alert-warning text-center" role="alert">
+                    Votre Table est vide.
+                </div>
+            <?php } } ?>
 
             <?php
             // ORDER BY DESC
@@ -129,30 +133,42 @@
             // Random Delete
             if (isset($_POST['randomsupp'])) {
                 $list = $manager->lirelaTable();
-                $manager->ctrlaltSupprand($list); ?>
-                <div class="alert alert-primary text-center" role="alert">
-                    Un Champion aléatoire a été Supprimé.
-                </div>
-            <?php }
+                $manager->ctrlaltSupprand($list);
+                if (!empty($list)) { ?>
+                    <div class="alert alert-primary text-center" role="alert">
+                        Un Champion aléatoire a été Supprimé.
+                    </div>
+                <?php } else { ?>
+                    <div class="alert alert-warning text-center" role="alert">
+                        La Table est vide
+                    </div>
+                <?php }
+            }
 
             // Random Read
             if (isset($_POST['randomread'])) {
                 $list = $manager->lirelaTable();
                 $lirerandom = $manager->lireRandom($list);
-                // echo $lirerandom[0]['champion']; 
-            ?>
-                <div class="col-md-4">
-                    <div class="card" style="width: 18rem;">
-                        <img src="https://images.pexels.com/photos/268351/pexels-photo-268351.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Nom : <?php echo $lirerandom[0]['champion'] ?></h5>
-                            <h6 class="card-text">Age : <?php echo $lirerandom[0]['age'] ?> ans</h6>
-                            <h6 class="card-text">Taille : <?php echo $lirerandom[0]['size'] ?>m</h6>
-                            <p class="card-text">Description : <?php echo $lirerandom[0]['description'] ?></p>
+                if (!empty($list)) {
+                    // echo $lirerandom[0]['champion']; 
+                ?>
+                    <div class="col-md-4">
+                        <div class="card" style="width: 18rem;">
+                            <img src="https://images.pexels.com/photos/268351/pexels-photo-268351.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">Nom : <?php echo $lirerandom[0]['champion'] ?></h5>
+                                <h6 class="card-text">Age : <?php echo $lirerandom[0]['age'] ?> ans</h6>
+                                <h6 class="card-text">Taille : <?php echo $lirerandom[0]['size'] ?>m</h6>
+                                <p class="card-text">Description : <?php echo $lirerandom[0]['description'] ?></p>
+                            </div>
                         </div>
                     </div>
-                </div>
+                <?php } else { ?>
+                    <div class="alert alert-warning text-center" role="alert">
+                        La Table est vide
+                    </div>
             <?php }
+            }
             ?>
 
         </div>
